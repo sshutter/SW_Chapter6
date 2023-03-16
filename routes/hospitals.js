@@ -1,10 +1,27 @@
-const express = require('express');
-const {getHospitals, getHospital, createHospital, deleteHospital, updateHospital} = require('../controllers/hospitals');
-const {protect, authorize} = require('../middleware/auth');
+const express = require("express");
+const {
+  getHospitals,
+  getHospital,
+  createHospital,
+  deleteHospital,
+  updateHospital,
+} = require("../controllers/hospitals");
+const { protect, authorize } = require("../middleware/auth");
+const Appointment = require("../models/Appointment");
+const appointmentRouter = require("./appointments");
 
 const router = express.Router();
 
-router.route('/').get(getHospitals).post(protect, authorize('admin'), createHospital);
-router.route('/:id').get(getHospital).put(protect, authorize('admin'), updateHospital).delete(protect, authorize('admin'), deleteHospital);
+router
+  .route("/")
+  .get(getHospitals)
+  .post(protect, authorize("admin"), createHospital);
+router
+  .route("/:id")
+  .get(getHospital)
+  .put(protect, authorize("admin"), updateHospital)
+  .delete(protect, authorize("admin"), deleteHospital);
 
-module.exports=router;
+router.use("/:hospitalId/appointments/", appointmentRouter);
+
+module.exports = router;
