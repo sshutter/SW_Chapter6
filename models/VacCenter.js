@@ -8,7 +8,6 @@ const VacCenter = function (vacCenter) {
 };
 
 VacCenter.getAll = (result) => {
-  console.log("inVacCenter get all");
   sql.query("SELECT * FROM vacCenters", (err, res) => {
     if (err) {
       console.log("error: ", err);
